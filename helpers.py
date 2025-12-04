@@ -1,8 +1,8 @@
-import random
 import time
 from time import perf_counter_ns
 from pprint import PrettyPrinter
 import numpy as np
+from PIL import Image
 
 def get_input_lines(i):
 
@@ -140,3 +140,25 @@ def np_color_print(arr : np.ndarray):
 
 def np_print(arr : np.ndarray):
     print(np_repr(arr))
+
+
+def save_gif(arr_list, path, resize_factor = 5):
+    imgs = [Image.fromarray(( (img) * 255 // 1).astype(np.uint8)).resize((resize_factor * img.shape[0], resize_factor * img.shape[1]), resample=Image.BOX)
+            for img in arr_list]
+    imgs[0].save(
+        path, save_all=True, append_images=imgs[1:], duration=50, loop=0
+    )
+
+def save_change_gif(frame_list, path, resize_factor = 5):
+    # assumes  frames contains values 0 and 1
+    new_list = list()
+    current = frame_list[0]
+    new_list.append(current)
+    for i in range(1, len(frame_list)):
+        next = frame_list[i]
+        current = 0.7 * current + 0.3 * next
+        new_list.append(current.copy())
+
+    # negative (looks nicer)
+    new_list = [1-arr for arr in new_list]
+    save_gif(new_list, path, resize_factor)

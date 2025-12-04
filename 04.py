@@ -1,6 +1,8 @@
 import numpy as np
 
-from helpers import get_map_input, np_color_print, np_repr
+from helpers import get_map_input, np_color_print, save_change_gif
+
+from PIL import Image
 
 test_input ="""
 ..@@.@@@@.
@@ -51,9 +53,11 @@ def task1(input_array):
     can_remove = get_removable_paper(input_array)
     return np.sum(can_remove)
 
-def task2(input_array, debug = False):
+def task2(input_array, debug = False, save_gif = False):
     removed_paper = []
     current = input_array
+
+    archive = [current.copy()]
 
     if debug:
         np_color_print(current)
@@ -62,11 +66,17 @@ def task2(input_array, debug = False):
         removable = get_removable_paper(current)
         removed_paper.append(np.sum(removable).item())
         current[removable] = 0
+
+        if save_gif:
+            archive.append(current.copy())
         if debug:
             print("removed paper:", removed_paper[-1])
             temp = current.copy()
             temp[removable] = 2
             np_color_print(temp)
+
+    if save_gif:
+        save_change_gif(archive, "04.gif")
 
     return sum(removed_paper)
 
@@ -75,5 +85,5 @@ print(task1(test_input))
 print(task1(real_input))
 
 print(task2(test_input, debug = True))
-print(task2(real_input))
+print(task2(real_input, save_gif=True))
 
