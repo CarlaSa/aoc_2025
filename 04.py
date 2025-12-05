@@ -53,7 +53,10 @@ def task1(input_array):
     can_remove = get_removable_paper(input_array)
     return np.sum(can_remove)
 
-def task2(input_array, debug = False, save_gif = False):
+def task2(input_array,
+          debug = False,
+          save_gif = False,
+          gif_path = "04.gif"):
     removed_paper = []
     current = input_array
 
@@ -76,14 +79,14 @@ def task2(input_array, debug = False, save_gif = False):
             np_color_print(temp)
 
     if save_gif:
-        save_change_gif(archive, "04.gif")
+        save_change_gif(archive, gif_path)
 
     return sum(removed_paper)
 
 
-print(task1(test_input))
-print(task1(real_input))
+print(task1(test_input.copy()))
+print(task1(real_input.copy()))
 
-print(task2(test_input, debug = True))
-print(task2(real_input, save_gif=True))
+print(task2(test_input.copy(), debug = True))
+print(task2(real_input.copy(), save_gif=True))
 
