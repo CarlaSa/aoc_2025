@@ -19,11 +19,6 @@ real_input = get_input(5)
 
 def parse_input(inp):
     fresh, ingredients = inp.split("\n\n")
-
-    def string_to_set(s):
-        a, b = s.split("-")
-        return set(range(int(a), int(b) + 1))
-
     fresh = [[int(a) for a in s.split("-")] for s in fresh.strip().split("\n")]
     ingredients = [int(s) for s in ingredients.strip().split("\n")]
     return fresh, ingredients
@@ -78,10 +73,10 @@ def task2(inp, debug=False):
 
 
 
-print(task1(test_input, debug=True))
+# print(task1(test_input, debug=True))
 print(task1(real_input))
 
-print(task2(test_input, debug=True))
+# print(task2(test_input, debug=True))
 print(task2(real_input))
 
 
